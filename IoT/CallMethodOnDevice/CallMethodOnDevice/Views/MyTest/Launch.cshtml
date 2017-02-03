@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Launch";
+}
+
+
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<div>
+    <p>
+        @using (Html.BeginForm("SubmitFormLaunch", "MyTest", FormMethod.Post, new { id = "submitFormLaunch" }))
+        {
+            <button type="submit" value="LaunchMethod">Launch Method!</button>
+            <br />
+        }
+    </p>
+</div>
+
+<div>
+    <p>
+        @using (Html.BeginForm("SubmitFormSend", "MyTest", FormMethod.Post, new { id = "submitFormSend" }))
+        {
+            <button type="submit" value="SendC2DMessage">SendC2DMessage</button>
+        }
+    </p>
+</div>
+
+
+<address>
+    <strong>Support:</strong>   <a href="mailto:vikasmca05@outlook.com">Support@example.com</a><br />
+</address>
