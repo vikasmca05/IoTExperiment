@@ -25,6 +25,7 @@ namespace SendCloudToDevice
         {
             var commandMessage = new Message(Encoding.ASCII.GetBytes("Cloud to device message."));
             await serviceClient.SendAsync("myVirtualDevice", commandMessage);
+            //await serviceClient.SendAsync("IoTExperiment", commandMessage);
         }
     }
 }

@@ -40,11 +40,10 @@ namespace SiulatedDevice
                 };
                 var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
                 var message = new Message(Encoding.ASCII.GetBytes(messageString));
-
                 await deviceClient.SendEventAsync(message);
                 Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, messageString);
 
-                Task.Delay(1000).Wait();
+                Task.Delay(10000).Wait();
             }
         }
     }

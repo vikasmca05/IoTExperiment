@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using VikasIoTController.Models;
+using System.Web.Security;
 
 namespace VikasIoTController.Controllers
 {
@@ -392,7 +393,10 @@ namespace VikasIoTController.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            Request.Cookies.Remove("UserId");
+            FormsAuthentication.SignOut();
+            Session.RemoveAll();
+            return RedirectToAction("Login", "Account");
         }
 
         //

@@ -17,9 +17,18 @@ namespace ReadC2DMessages
 {
     public sealed class StartupTask : IBackgroundTask
     {
+            
+        static string virtualDeviceID = "myVirtualDevice";
+        static string virtualPrimaryKey = "/6t9feUPbOyQj/NLnwbteaDYbULQ33r5X89tW4iTn4M=";
+        static string virtualConnectionstring = "HostName=VikasIoTHub.azure-devices.net;DeviceId=myVirtualDevice;SharedAccessKey=/6t9feUPbOyQj/NLnwbteaDYbULQ33r5X89tW4iTn4M=";
+
+        static string RPiDeviceID = "IoTExperiment";
+        static string RPiPrimaryKey = "wLs8zB9W8g8I8BQwPC2S4hGl0mKg1V4WJzgV7hy";
+        static string RPiConnectionstring = "HostName=VikasIoTHub.azure-devices.net;DeviceId=IoTExperiment;SharedAccessKey=wLs8zB9W8g8I8BQwPC2S4hGl0mKg1V4WJzgV7hy/bIk=";
+
         static DeviceClient deviceClient;
         static string iotHubUri = "VikasIoTHub.azure-devices.net";
-        static string deviceKey = "wLs8zB9W8g8I8BQwPC2S4hGl0mKg1V4WJzgV7hy/bIk="; //"/6t9feUPbOyQj/NLnwbteaDYbULQ33r5X89tW4iTn4M=";
+        static string deviceKey = virtualPrimaryKey; //" / 6t9feUPbOyQj/NLnwbteaDYbULQ33r5X89tW4iTn4M=";
         BackgroundTaskDeferral Deferral;
         private AppServiceConnection _AppService;
         public async void Run(IBackgroundTaskInstance taskInstance)
@@ -33,7 +42,7 @@ namespace ReadC2DMessages
             var triggerDetails = taskInstance.TriggerDetails as AppServiceTriggerDetails;
             _AppService = triggerDetails.AppServiceConnection;
             _AppService.RequestReceived += Connection_RequestReceived;
-            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("IoTExperiment", deviceKey), TransportType.Amqp);
+            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(virtualDeviceID, deviceKey), TransportType.Amqp);
 
             //Send Device to Cloud Message
             //SendDeviceToCloudMessagesAsync();

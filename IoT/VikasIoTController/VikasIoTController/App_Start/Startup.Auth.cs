@@ -46,9 +46,9 @@ namespace VikasIoTController
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseMicrosoftAccountAuthentication(
+                clientId: "000000004C1C6E4B",
+                clientSecret: "vHmGRct26lsqgzNAGXsj7+E/UAN+eF4g");
 
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
@@ -58,11 +58,11 @@ namespace VikasIoTController
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "222007838984-7hmhrn65nenjc7eo4fppp51sr5fnpvjc.apps.googleusercontent.com",
+                ClientSecret = "FqNSnTAMhp2hYxTgFz6NMEGO"
+            });
         }
     }
 }

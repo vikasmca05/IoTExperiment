@@ -34,14 +34,14 @@ namespace HeadedApplication
         private async void SetupAppService()
         {
             //var listing = await AppServiceCatalog.FindAppServiceProvidersAsync("ReceiveMessageService");
-            var listing = await AppServiceCatalog.FindAppServiceProvidersAsync("ReceiveMessageService");
+            var listing = await AppServiceCatalog.FindAppServiceProvidersAsync("C2DService");
             var packageName = "";
             if (listing.Count == 1)
                 packageName = listing[0].PackageFamilyName;
 
             _appService = new AppServiceConnection();
             _appService.PackageFamilyName = packageName;
-            _appService.AppServiceName = "ReceiveMessageService";
+            _appService.AppServiceName = "C2DService";
                                           
 
             var status = await _appService.OpenAsync();

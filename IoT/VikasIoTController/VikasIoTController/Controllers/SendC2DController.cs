@@ -14,7 +14,15 @@ namespace VikasIoTController.Controllers
         public ViewResult SendMessage()
         {
             SendMessageNow();
-            var messageModel = new SendMessageMode();
+          //var messageModel = new SendMessageMode();
+            return View();
+        }
+
+        [HttpGet]
+        public ViewResult SendPushNotifications()
+        {
+            PushNotifications();
+            //var messageModel = new SendMessageMode();
             return View();
         }
 
@@ -29,6 +37,20 @@ namespace VikasIoTController.Controllers
         {
             SendC2DHandler control = new SendC2DHandler();
             control.StartNow();
+        }
+        public void PushNotifications()
+        {
+            SendC2DHandler control = new SendC2DHandler();
+            control.PushNotifications();
+        }
+
+        [HttpGet]
+        public ActionResult ChangeEventPosted()
+        {
+            SendC2DHandler control = new SendC2DHandler();
+            control.ChangeEvent();
+            return RedirectToAction("Success");
+            //return View("View");
         }
 
     }
