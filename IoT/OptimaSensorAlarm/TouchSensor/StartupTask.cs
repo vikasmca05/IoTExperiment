@@ -12,6 +12,7 @@ using Windows.Foundation.Collections;
 using Windows.Devices.Gpio;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
+using Newtonsoft.Json;
 
 // The Background Application template is documented at http://go.microsoft.com/fwlink/?LinkID=533884&clcid=0x409
 
@@ -58,7 +59,10 @@ namespace TouchSensor
 
 
             //Send Device to Cloud Message
-            //SendDeviceToCloudMessagesAsync();
+            SendDeviceToCloudMessagesAsync();
+            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(RPiDeviceID, deviceKey), TransportType.Amqp);
+            //Send Device to Cloud Interactive Message
+            SendDeviceToCloudInteractiveMessagesAsync();
 
             //Change LED State 
 
@@ -76,6 +80,31 @@ namespace TouchSensor
             //Deferral.Complete();
         }
 
+        private static async void SendDeviceToCloudMessagesAsync()
+        {
+              var telemetryDataPoint = new
+                {
+                    deviceId = RPiDeviceID
+    
+                };
+                var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
+                var message = new Message(Encoding.ASCII.GetBytes(messageString));
+
+                await deviceClient.SendEventAsync(message);
+                
+            
+        }
+        private static async void SendDeviceToCloudInteractiveMessagesAsync()
+        {
+            var interactiveMessageString = "Alert Message";
+            var interactiveMessage = new Message(Encoding.ASCII.GetBytes(interactiveMessageString));
+            interactiveMessage.Properties["messageType"] = "interactive";
+
+            interactiveMessage.MessageId = Guid.NewGuid().ToString();
+
+            await deviceClient.SendEventAsync(interactiveMessage);
+                                    
+        }
         private void TaskInstance_Canceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
         {
             //a few reasons that you may be interested in.
@@ -102,7 +131,7 @@ namespace TouchSensor
 
         private async Task ReceiveC2dAsync()
         {
-            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(RPiDeviceID, deviceKey), TransportType.Amqp);
+            //deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(RPiDeviceID, deviceKey), TransportType.Amqp);
             //Console.WriteLine("\nReceiving cloud to device messages from service");
             while (true)
             {

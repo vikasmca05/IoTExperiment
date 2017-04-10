@@ -19,8 +19,8 @@ namespace VikasIoTController
         //  FROM[dbo].[D2CEvent]
 
         public string D2CEventId { get; set; }
-        public string Offset { get; set; }
         public DateTime EnqueuedTimeUtc { get; set; }
+        public string Offset { get; set; }
         public string PartitionKey { get; set; }
         public int SequenceNumber { get; set; }
         public string deviceid { get; set; }
@@ -48,26 +48,42 @@ namespace VikasIoTController
                         // a notification object associated with it.
                         command.Notification = null;
 
-                        SqlDependency dependency = new SqlDependency(command);
-                        dependency.OnChange += new OnChangeEventHandler(dependency_OnChange);
+                        //SqlDependency dependency = new SqlDependency(command);
+                        //dependency.OnChange += new OnChangeEventHandler(dependency_OnChange);
 
                         if (connection.State == ConnectionState.Closed)
                             connection.Open();
 
-                        using (var reader = command.ExecuteReader())
-                            return reader.Cast<IDataRecord>()
-                            .Select(x => new D2CEvent()
-                            {
-                                D2CEventId = x.GetString(0),
-                                EnqueuedTimeUtc = x.GetDateTime(1),
-                                Offset = x.GetString(2),
-                                PartitionKey = x.GetString(3),
-                                SequenceNumber = x.GetInt32(4),
-                                deviceid = x.GetString(5)
+                        //using (var reader = command.ExecuteReader())
+                        //    return reader.Cast<IDataRecord>()
+                        //    .Select(x => new D2CEvent()
+                        //    {
+                        //        D2CEventId = x.GetString(0),
+                        //        EnqueuedTimeUtc = x.GetDateTime(1),
+                        //        Offset = x.GetString(2),
+                        //        PartitionKey = x.GetString(3),
+                        //        SequenceNumber = x.GetInt32(4),
+                        //        deviceid = x.GetString(5)
                                 
-                            }).ToList();
+                        //    }).ToList();
 
 
+                    var EventSeries = new List<D2CEvent>();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var D2CEvent = new D2CEvent()
+                            {
+                                D2CEventId = (string)reader["D2CEventId"],
+                                EnqueuedTimeUtc = (DateTime)reader["EnqueuedTimeUtc"],
+                                Offset = (string)reader["Offset"]
+                            };
+
+                            EventSeries.Add(D2CEvent);
+                        }
+                    }
+                    return EventSeries;
 
                 }
             }

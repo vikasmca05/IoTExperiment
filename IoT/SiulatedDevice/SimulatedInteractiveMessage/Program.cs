@@ -21,8 +21,8 @@ namespace SimulatedInteractiveMessage
             //deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("myVirtualDevice", deviceKey));
             deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("IoTExperiment", RPiPrimaryKey));
             
-            //SendDeviceToCloudInteractiveMessagesAsync();
-            ReceiveC2DAsync();
+            SendDeviceToCloudInteractiveMessagesAsync();
+            //ReceiveC2DAsync();
             Console.ReadLine();
         }
 
