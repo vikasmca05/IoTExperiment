@@ -229,10 +229,11 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NotificationViewModel.cs" />
     <Compile Include="Models\SendC2D.cs" />
+    <Compile Include="Models\SendC2DViewModel.cs" />
     <Compile Include="Notifications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SendC2D.cs" />
     <Compile Include="SensorEvent.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -295,8 +296,10 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\SendC2DMessage.cshtml" />
-    <Content Include="Views\SendC2D\SendMessage.cshtml" />
     <Content Include="Views\Home\Status.cshtml" />
+    <Content Include="Views\Notifications\SendToastMessage.cshtml" />
+    <Content Include="Views\Notifications\Index.cshtml" />
+    <Content Include="Views\SendC2D\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

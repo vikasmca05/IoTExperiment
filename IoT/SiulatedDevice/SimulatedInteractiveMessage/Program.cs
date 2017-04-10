@@ -14,11 +14,13 @@ namespace SimulatedInteractiveMessage
         static DeviceClient deviceClient;
         static string iotHubUri = "VikasIoTHub.azure-devices.net";
         static string deviceKey = "/6t9feUPbOyQj/NLnwbteaDYbULQ33r5X89tW4iTn4M=";
+        static string RPiPrimaryKey = "wLs8zB9W8g8I8BQwPC2S4hGl0mKg1V4WJzgV7hy/bIk=";
         static void Main(string[] args)
         {
             Console.WriteLine("Simulated device\n");
-            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("myVirtualDevice", deviceKey));
-
+            //deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("myVirtualDevice", deviceKey));
+            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("IoTExperiment", RPiPrimaryKey));
+            
             //SendDeviceToCloudInteractiveMessagesAsync();
             ReceiveC2DAsync();
             Console.ReadLine();

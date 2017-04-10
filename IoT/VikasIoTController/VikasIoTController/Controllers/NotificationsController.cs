@@ -10,14 +10,22 @@ using System.Web;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.Azure.NotificationHubs.Messaging;
 using System.Web.Mvc;
+using VikasIoTController.Models;
 using Microsoft.Ajax.Utilities;
 
 namespace VikasIoTController.Controllers
 {
+    
+
     public class NotificationsController : Controller
     {
+        [System.Web.Mvc.Authorize]
+        public ActionResult Index()
+        {
+            return View();
+        }
 
-        public async Task<ActionResult> SendToastMessage()
+        public async Task<ActionResult> SendToastMessage(NotificationViewModel model)
 
         //public async Task<HttpResponseMessage> Post(string pns, [FromBody]string message, string to_tag)
         {
@@ -25,16 +33,16 @@ namespace VikasIoTController.Controllers
             //string[] userTag = new string[2];
             //userTag[0] = "username:" + to_tag;
             //userTag[1] = "from:" + user;
-            string Pushmessage = null;
-            string UserTag = null;
+            string Pushmessage = model.Pushmessage;
+            string UserTag = model.UserTag;
             string fromUser = null;
 
-            if (Request.ContentLength != null)
-            {
-                Pushmessage = Request.QueryString["message"];
-                UserTag = Request.QueryString["to_tag"];
-                fromUser = Request.QueryString["user"];
-            }
+            //if (Request.ContentLength != null)
+            //{
+            //    Pushmessage = Request.QueryString["message"];
+            //    UserTag = Request.QueryString["to_tag"];
+            //    fromUser = Request.QueryString["user"];
+            //}
             Microsoft.Azure.NotificationHubs.NotificationOutcome outcome = null;
             HttpStatusCode ret = HttpStatusCode.InternalServerError;
 
@@ -42,7 +50,7 @@ namespace VikasIoTController.Controllers
             {
                 case "wns":
                     // Windows 8.1 / Windows Phone 8.1
-                    var toast = @"<toast><visual><binding template=""ToastText01""><text id=""1"">" + "From " + fromUser + ": " + Pushmessage + "</text></binding></visual></toast>";
+                    var toast = @"<toast><visual><binding template=""ToastText01""><text id=""1"">" + Pushmessage + "</text></binding></visual></toast>";
                     outcome = await Notifications.Instance.Hub.SendWindowsNativeNotificationAsync(toast,UserTag);
                     break;
                 //case "apns":
@@ -66,8 +74,8 @@ namespace VikasIoTController.Controllers
                 }
             }
 
-            //return View();
-            return RedirectToAction("Success");
+            return View();
+            //return RedirectToAction("Success");
         }
     }
 }

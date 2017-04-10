@@ -35,7 +35,7 @@ namespace VikasIoTController.Models
         static ServiceClient serviceClient;
         static string connectionString = "HostName=VikasIoTHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=UaHW2M62P5MxHsJXtd5fK+ZD8H6LZ1ww/55QnoleMrI=";
 
-        public void StartNow()
+        public void StartNow(string id)
         {
             System.Diagnostics.Trace.TraceInformation("Send Cloud to Device Message");
             serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
@@ -51,7 +51,7 @@ namespace VikasIoTController.Models
                 {
                     ThreadPool.QueueUserWorkItem(
                         new WaitCallback(delegate (object state) {
-                            var strMessage = "TestMessage";
+                            var strMessage = "1";
                             SendC2DMessage(strMessage);
                             if (Interlocked.Decrement(ref toProcess) == 0) resetEvent.Set();
                         }), null);
@@ -100,7 +100,7 @@ namespace VikasIoTController.Models
         public static void SendC2DMessage(string message)
         {
             var commandMessage = new Message(Encoding.ASCII.GetBytes("Cloud to device message."));
-            serviceClient.SendAsync(virtualDeviceID, commandMessage);
+            serviceClient.SendAsync(RPiDeviceID, commandMessage).Wait();
         }
 
         private async static void ReceiveFeedbackAsync()

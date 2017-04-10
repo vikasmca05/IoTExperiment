@@ -24,8 +24,8 @@ namespace SendCloudToDevice
         private async static Task SendC2DMessage()
         {
             var commandMessage = new Message(Encoding.ASCII.GetBytes("Cloud to device message."));
-            await serviceClient.SendAsync("myVirtualDevice", commandMessage);
-            //await serviceClient.SendAsync("IoTExperiment", commandMessage);
+            //await serviceClient.SendAsync("myVirtualDevice", commandMessage);
+            await serviceClient.SendAsync("IoTExperiment", commandMessage);
         }
     }
 }

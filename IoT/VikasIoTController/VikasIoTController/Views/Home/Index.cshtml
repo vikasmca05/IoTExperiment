@@ -5,17 +5,21 @@
 <div class="jumbotron">
     <h1>Optima Sensor Alarm</h1>
     <p class="lead">Web Application to check and control home sensors.</p>
-    <p><a href="http://vikasgomia.blogspot.com" class="btn btn-primary btn-lg">Vikas &raquo;</a></p>
+    <p><a href="http://vikasgomia.blogspot.com" class="btn btn-primary btn-lg">Vikas Personal Blog&raquo;</a></p>
 </div>
 <div class="row">
-    <div class="col-md-4">
-        <div >
-            <ul>
-                <li>@Html.ActionLink("SendC2DMessage", "SendMessage", "SendC2D")</li>
-                <li>@Html.ActionLink("SendNotification", "SendToastMessage", "Notifications")</li>
-                <li>@Html.ActionLink("GetState", "Contact", "Value")</li>
-            </ul>
-            @Html.Partial("_LoginPartial")
-        </div>
+    
+        <div class="col-md-4">
+
+            @Html.ActionLink("SendC2DMessage", "Index", "SendC2D",null, new { @style = "color:white;background-color:#C12957;text-transform:capitalize;padding: 15px 15px;border-radius: 4px;border: solid 1px #20538D;text - shadow: 0 - 1px 0 rgba(0, 0, 0, 0.4); " })
+            </div>
+        <div class="col-md-4">
+            @Html.ActionLink("SendNotification", "Index", "Notifications", null, new { @style = "color:white;background-color:#C12957;text-transform:capitalize;padding: 15px 15px;border-radius: 4px;border: solid 1px #20538D;text - shadow: 0 - 1px 0 rgba(0, 0, 0, 0.4); " })
+            </div>
+<div class="col-md-4">
+            @Html.ActionLink("GetState", "Contact", "Value", null, new { @style = "color:white;background-color:#C12957;text-transform:capitalize;padding: 15px 15px;border-radius: 4px;border: solid 1px #20538D;text - shadow: 0 - 1px 0 rgba(0, 0, 0, 0.4); " })
     </div>
-</div>
+            @*@Html.Partial("_LoginPartial")*@
+        
+    </div>
+
